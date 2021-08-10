@@ -9,9 +9,21 @@ import {
   Input
 } from '@chakra-ui/react';
 
-function SearchBar() {
+function SearchBar({handleSubmit}) {
+  const [newSearch, setNewSearch] = React.useState("");
+
+  const handleChange = (e) => {
+    setNewSearch(e.target.value)
+  }
+
+  const handleLocalSubmit = (e) => {
+    e.preventDefault()
+    handleSubmit(newSearch)
+    setNewSearch("")
+  }
+
     return (
-        <form style={{ width: '336px' }}>
+        <form onSubmit={handleLocalSubmit} style={{ width: '336px' }}>
         <FormControl>
           {/* <FormLabel htmlFor='punkNumber' p={2} m={0}>
             Can Mandi eat this?
@@ -21,8 +33,8 @@ function SearchBar() {
               name='mandiEats'
               placeholder='food or ingredient...'
               type='text'
-            //   value={punkName}
-            //   onChange={handleChange}
+              value={newSearch}
+              onChange={handleChange}
             />
             <InputRightElement w='6rem'>
               <Button size='lg' h='3rem' colorScheme='pink' type='submit'>
